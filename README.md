@@ -207,64 +207,12 @@ A typical response should include:
 
 ---
 
-## Project configuration
+## Observability (tracing & telemetry)
 
-Centralize tunables in `configs/`:
-- Chunk size / overlap
-- Retrieval `top_k`
-- Reranking on/off
-- Prompt templates
-- Model selection (LLM & embeddings)
-- Safety/guardrail settings (refusal, citation requirement)
+### LangSmith tracing
 
----
+<p align="center">
+  <img src="assets/langsmith_tracing.png" alt="LangSmith: trace view for RAG / LangGraph runs" width="900" />
+</p>
 
-## Compliance notes (submission-ready)
-
-- **No sensitive documents should be committed** to git. Use `data/raw/` locally and add appropriate `.gitignore` rules.
-- Ensure the pipeline logs do not leak secrets (API keys, tokens) or sensitive text.
-- Prefer **citation-required** prompting: the model must ground claims in retrieved text.
-- Treat outputs as **decision support**, not legal advice; require human review in regulated workflows.
-
----
-
-## Testing
-
-```bash
-pytest -q
-```
-
-If you have integration tests that hit external APIs, document:
-- how to enable them
-- required env vars
-- expected cost/latency considerations
-
----
-
-## Troubleshooting
-
-- **Empty/irrelevant answers**: verify indexing ran, check `top_k`, chunk size, and embedding model compatibility.
-- **Hallucinations**: enforce citation-only answers; lower temperature; add reranking; increase retrieval breadth.
-- **Slow queries**: enable caching; reduce chunk count; consider ANN index settings; add batching for embeddings.
-- **Inconsistent results**: pin model versions; fix random seeds where applicable; persist indexes deterministically.
-
----
-
-## Roadmap (optional)
-
-- Add reranker (cross-encoder) for better relevance
-- Add document-level access controls (RBAC/ABAC) for multi-tenant compliance
-- Add structured extraction (controls, evidence mapping, gap analysis)
-- Add evaluation dashboards (faithfulness, coverage, latency, cost)
-
----
-
-## License
-
-Add your chosen license here (MIT/Apache-2.0/Proprietary). If a `LICENSE` file exists, reference it.
-
----
-
-## Acknowledgements
-
-List key libraries/frameworks used (vector store, LLM client, PDF extraction, evaluation toolkit), and any internal guidelines followed.
+LangSmith is used to trace end-to-end
